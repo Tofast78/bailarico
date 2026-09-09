@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#150920">
-<meta name="description" content="A tua cara num corpo de dancarino, mini na mão, a apanhar o compasso da musica na Quinta.">
+<meta name="description" content="A tua cara num corpo de dancarino que apanha o compasso da musica.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%BB%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%95%BA%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Quinta de Minis">
-<meta property="og:description" content="A tua cara num corpo de dancarino, mini na mão, a apanhar o compasso da musica na Quinta.">
+<meta property="og:title" content="Cabeça no Bailarico">
+<meta property="og:description" content="A tua cara num corpo de dancarino que apanha o compasso da musica.">
 <meta property="og:image" content="preview.jpg">
-<title>Quinta de Minis</title>
+<title>Cabeça no Bailarico</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Archivo:wght@400;600;800&family=Space+Mono:wght@700&display=swap">
 <style>html,body{background:#150920}</style>
@@ -97,20 +97,9 @@ body{
 .plinth{position:absolute;left:14%;right:14%;bottom:-2px;height:12px;border-radius:50%;
   background:radial-gradient(closest-side,var(--pink),rgba(255,46,136,0));opacity:0;transition:opacity .2s}
 .performer.sel .plinth{opacity:.95}
-.minicrate{position:absolute;left:50%;bottom:1.5%;transform:translateX(-50%);width:44%;max-width:190px;
-  z-index:0;opacity:.94;filter:drop-shadow(0 6px 9px rgba(0,0,0,.4));pointer-events:none}
-.minicrate svg{width:100%;height:auto;display:block}
 .stage-glow{position:absolute;inset:0;pointer-events:none;z-index:4;
   background:radial-gradient(62% 30% at 50% 92%, rgba(255,201,60,calc(.09 + var(--pulse)*.20)) 0%, rgba(255,201,60,0) 70%);
   mix-blend-mode:screen}
-.stage-photo{position:absolute;inset:0;background-size:cover;background-position:center;
-  opacity:0;transition:opacity .25s}
-.stage-photo.on{opacity:1}
-.stage-scrim{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;
-  background:linear-gradient(180deg, rgba(21,9,32,.6) 0%, rgba(21,9,32,.18) 32%, rgba(21,9,32,.18) 68%, rgba(21,9,32,.62) 100%)}
-.stage-scrim.on{opacity:1}
-.bgrow{display:flex;gap:8px}
-.bgrow .btn{width:auto;flex:1}
 .hud{position:absolute;left:12px;top:12px;right:12px;z-index:5;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;pointer-events:none}
 .bpm{pointer-events:auto;display:flex;align-items:baseline;gap:6px;background:rgba(21,9,32,.62);backdrop-filter:blur(6px);
   border:1px solid rgba(251,239,228,.16);border-radius:999px;padding:5px 12px}
@@ -228,8 +217,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
 
   <header class="top">
     <div class="brand">
-      <h1>Quinta de Minis</h1>
-      <p>As vossas caras · mini na mão · a música que estiver a dar</p>
+      <h1>Cabeça no Bailarico</h1>
+      <p>As vossas caras · a música que estiver a dar</p>
     </div>
     <div class="ball" aria-hidden="true"></div>
   </header>
@@ -254,6 +243,15 @@ a.btn{display:block;text-align:center;text-decoration:none}
     <button class="btn" id="pick">Escolher a primeira foto</button>
     <button class="btn ghost" id="skip">Ir direto ao palco</button>
 
+    <a class="xmas" id="xmaslink" href="https://claude.ai/code/artifact/500f3d31-927f-4f88-86c2-ab4e647a3af5" target="_blank" rel="noopener">
+      <span class="em" aria-hidden="true">🎄</span>
+      <span class="xt">
+        <b>Versão de Natal</b>
+        <i>Duendes, renas e pais natais a dançar na neve, com música da casa</i>
+      </span>
+      <span class="chev" aria-hidden="true">→</span>
+    </a>
+
     <p class="note">Sem microfone à mão? Também podes carregar um ficheiro de música ou marcar o ritmo com o dedo.
       As fotos nunca saem do teu aparelho.</p>
   </section>
@@ -275,29 +273,6 @@ a.btn{display:block;text-align:center;text-decoration:none}
   <section class="view" id="view-stage">
     <div class="stage" id="stage">
       <canvas id="fx"></canvas>
-      <div class="stage-photo" id="stagephoto" aria-hidden="true"></div>
-      <div class="stage-scrim" id="stagescrim" aria-hidden="true"></div>
-      <div class="minicrate" aria-hidden="true">
-        <svg viewBox="0 0 160 92" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="18" width="152" height="70" rx="6" fill="#c81f2c"/>
-          <rect x="4" y="18" width="152" height="70" rx="6" fill="none" stroke="#8f0f1c" stroke-width="2"/>
-          <g stroke="#8f0f1c" stroke-width="2" opacity=".55">
-            <line x1="4" y1="40" x2="156" y2="40"/>
-            <line x1="4" y1="62" x2="156" y2="62"/>
-            <line x1="34" y1="18" x2="34" y2="88"/>
-            <line x1="64" y1="18" x2="64" y2="88"/>
-            <line x1="94" y1="18" x2="94" y2="88"/>
-            <line x1="124" y1="18" x2="124" y2="88"/>
-          </g>
-          <g fill="#e2b33c">
-            <circle cx="19" cy="14" r="7"/><circle cx="49" cy="14" r="7"/><circle cx="79" cy="14" r="7"/>
-            <circle cx="109" cy="14" r="7"/><circle cx="139" cy="14" r="7"/>
-          </g>
-          <rect x="38" y="34" width="84" height="34" rx="4" fill="#fff"/>
-          <text x="80" y="49" text-anchor="middle" font-family="Bungee, Archivo, sans-serif" font-size="12" fill="#c81f2c">QUINTA</text>
-          <text x="80" y="62" text-anchor="middle" font-family="Bungee, Archivo, sans-serif" font-size="9" fill="#1a2a4d" letter-spacing="1">DE MINIS</text>
-        </svg>
-      </div>
       <div class="performer" id="p0" data-i="0"><div class="plinth"></div><svg viewBox="0 -34 220 356" aria-label="Bailarino 1"></svg></div>
       <div class="performer" id="p1" data-i="1"><div class="plinth"></div><svg viewBox="0 -34 220 356" aria-label="Bailarino 2"></svg></div>
       <div class="performer" id="p2" data-i="2"><div class="plinth"></div><svg viewBox="0 -34 220 356" aria-label="Bailarino 3"></svg></div>
@@ -312,15 +287,6 @@ a.btn{display:block;text-align:center;text-decoration:none}
     </div>
 
     <button class="btn" id="shoot">📸 Fotografar e partilhar</button>
-
-    <div class="card">
-      <p class="label">Fundo do palco</p>
-      <div class="bgrow">
-        <button class="btn ghost" id="bgcambtn">📷 Tirar foto</button>
-        <button class="btn ghost" id="bggalbtn">🖼️ Da galeria</button>
-      </div>
-      <button class="btn ghost" id="bgreset" style="margin-top:8px">Repor fundo padrão</button>
-    </div>
 
     <div class="card">
       <p class="label">De onde vem a música</p>
@@ -379,8 +345,6 @@ a.btn{display:block;text-align:center;text-decoration:none}
 
 <input type="file" id="filein" accept="image/*" class="hidden">
 <input type="file" id="audioin" accept="audio/*" class="hidden">
-<input type="file" id="bgcam" accept="image/*" capture="environment" class="hidden">
-<input type="file" id="bggallery" accept="image/*" class="hidden">
 <audio id="player" loop crossorigin="anonymous" class="hidden"></audio>
 
 <script>
@@ -529,7 +493,7 @@ $("#zoom").addEventListener("input", e=>{ cs = e.target.value/100; drawCrop(); }
 $("#rot").addEventListener("input", e=>{ crot = +e.target.value; drawCrop(); });
 window.addEventListener("resize", ()=>{ if($("#view-crop").classList.contains("on")) fitCrop(); sizeFx(); });
 
-function renderHeadCanvas(){
+function exportHead(){
   if(!img || !CW || !baseFit) return null;
   const N = 400, out = document.createElement("canvas");
   out.width = N; out.height = N;
@@ -544,11 +508,7 @@ function renderHeadCanvas(){
   g.beginPath(); g.arc(N/2,N/2,N/2-1,0,TAU); g.fillStyle="#fff"; g.fill();
   g.globalCompositeOperation = "source-over";
   sampleSkin(g,N);
-  return out;
-}
-function exportHead(){
-  const c = renderHeadCanvas();
-  return c ? c.toDataURL("image/png") : null;
+  return out.toDataURL("image/png");
 }
 // Adivinha o tom de pele pelas bochechas; se o que lá está não parece pele, não mexe.
 function sampleSkin(g,N){
@@ -580,46 +540,6 @@ const BODIES = {
 };
 const SV = [0,1,2,3].map(i=>document.querySelector("#p"+i+" svg"));
 const JEL = [{},{},{},{}];
-
-/* ---- poça de vómito, tipo banda desenhada: mancha irregular + pingos + textura ---- */
-function rnd(seed){ const x = Math.sin(seed*127.1)*43758.5453; return x-Math.floor(x); }
-function blobPath(seed,cx,cy,rx,ry,lobes){
-  const pts=[];
-  for(let k=0;k<lobes;k++){
-    const a=(k/lobes)*TAU;
-    const j=0.6+rnd(seed+k*3.7)*0.8;
-    pts.push([cx+Math.cos(a)*rx*j, cy+Math.sin(a)*ry*j]);
-  }
-  let d=`M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)} `;
-  for(let k=0;k<lobes;k++){
-    const p0=pts[k], p1=pts[(k+1)%lobes];
-    const mx=(p0[0]+p1[0])/2, my=(p0[1]+p1[1])/2;
-    d+=`Q${p0[0].toFixed(1)},${p0[1].toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)} `;
-  }
-  return d+"Z";
-}
-function vomitSplash(seed){
-  const puddle = blobPath(seed,-14,74,30,13,11);
-  const inner  = blobPath(seed+9,-16,73,18,7,9);
-  let drops="";
-  for(let k=0;k<7;k++){
-    const a = rnd(seed+50+k*4)*TAU;
-    const dist = 15+rnd(seed+90+k*5)*34;
-    const dx = -14+Math.cos(a)*dist, dy = 64+Math.sin(a)*dist*0.6-6;
-    const r = 2.2+rnd(seed+130+k*6)*4.3;
-    const rot = (rnd(seed+170+k*7)*70-35).toFixed(0);
-    const tone = k%2 ? "#c3cc3c" : "#e2e660";
-    drops += `<ellipse cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" rx="${r.toFixed(1)}" ry="${(r*0.7).toFixed(1)}" fill="${tone}" transform="rotate(${rot} ${dx.toFixed(1)} ${dy.toFixed(1)})"/>`;
-  }
-  let hatch="";
-  for(let k=0;k<4;k++){
-    const hx=-28+rnd(seed+220+k*3)*30, hy=66+rnd(seed+240+k*3)*13;
-    hatch += `<path d="M${hx.toFixed(1)},${hy.toFixed(1)} q4,-3 7,0.6" stroke="#7c8420" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".6"/>`;
-  }
-  return `<path d="${puddle}" fill="#d8db3a" stroke="#7c8420" stroke-width="1.3"/>
-    <path d="${inner}" fill="#a7b22c" opacity=".55"/>
-    ${hatch}${drops}`;
-}
 
 function buildDancer(i){
   const D = S.d[i], b = BODIES[D.body], skin = D.skin;
@@ -654,20 +574,11 @@ function buildDancer(i){
         <rect x="-13" y="50" width="28" height="14" rx="${b.boxy?2:7}" fill="${b.shoe}"/>
       </g></g>`;
   };
-  const mini = side => side!=="R" ? "" : `
-      <g transform="translate(9,31) rotate(20)">
-        <rect x="-4.2" y="-27" width="8.4" height="25" rx="2" fill="#a9701f"/>
-        <rect x="-2.7" y="-34" width="5.4" height="9" fill="#a9701f"/>
-        <rect x="-3.3" y="-35.6" width="6.6" height="3.4" rx="1" fill="#e2b33c"/>
-        <rect x="-4.2" y="-15.5" width="8.4" height="9.5" fill="#f4ecd9"/>
-        <rect x="-4.2" y="-11.5" width="8.4" height="2.3" fill="#c81f2c"/>
-      </g>`;
   const arm = side => `<g data-j="arm${side}">
       <rect x="-7.5" y="-5" width="15" height="47" rx="${rx-1}" fill="${limb}"/>
       <g data-j="fore${side}">
         <rect x="-7" y="-4" width="14" height="42" rx="${rx-1}" fill="${limbD}"/>
         <circle cx="0" cy="42" r="8.5" fill="${skin}"/>
-        ${mini(side)}
       </g></g>`;
 
   SV[i].innerHTML = `
@@ -682,11 +593,7 @@ function buildDancer(i){
        <g data-j="torso">
          ${skirt}${torsoShape}${lapel}${stripe}
          ${arm("L")}${arm("R")}
-         <g data-j="neck">${antenna}${head}<g data-j="vomit" opacity="0">
-           <path d="M0,-14 Q-15,8 -20,34 Q-24,52 -16,64" stroke="#d8db3a" stroke-width="8" fill="none" stroke-linecap="round"/>
-           <path d="M0,-14 Q9,6 12,28 Q14,42 8,54" stroke="#c3cc3c" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>
-           ${vomitSplash(i*13+7)}
-         </g></g>
+         <g data-j="neck">${antenna}${head}</g>
        </g>
      </g>
    </g>`;
@@ -748,23 +655,16 @@ const MOVES = {
     const s = sw(pose2(p,beat))*5;
     return {hip:s, torso:-s*.5, head:s*.6, lift:2*Math.abs(Math.sin(p*Math.PI)),
       armL:10+4*s, armR:10-4*s, foreL:-14, foreR:-14, legL:6, legR:-6, kneeL:0, kneeR:0};
-  }},
-  vomitar:{ name:"🤮 Vomitar", fn(p,beat,e){
-    const heave = Math.max(0, Math.sin(p*Math.PI));
-    const bend = 32+24*heave;
-    return {hip:5*sw(p*2), torso:bend, head:bend*0.55, lift:0,
-      armL:32, armR:98, foreL:-16, foreR:-32,
-      legL:12, legR:-10, kneeL:6, kneeR:6, vomit:clamp(heave*e,0,1)};
   }}
 };
-const MOVE_CYCLE = ["febre","torcida","saltinho","moinho","pontape","robo","vomitar"];
+const MOVE_CYCLE = ["febre","torcida","saltinho","moinho","pontape","robo"];
 
 function mirror(t){
   return {hip:-t.hip, torso:-t.torso, head:-t.head, lift:t.lift,
     armL:t.armR, armR:t.armL, foreL:t.foreR, foreR:t.foreL,
-    legL:t.legR, legR:t.legL, kneeL:t.kneeR, kneeR:t.kneeL, vomit:t.vomit};
+    legL:t.legR, legR:t.legL, kneeL:t.kneeR, kneeR:t.kneeL};
 }
-const cur = [0,1,2,3].map(()=>({hip:0,torso:0,head:0,lift:0,armL:10,armR:10,foreL:-10,foreR:-10,legL:6,legR:-6,kneeL:0,kneeR:0,vomit:0}));
+const cur = [0,1,2,3].map(()=>({hip:0,torso:0,head:0,lift:0,armL:10,armR:10,foreL:-10,foreR:-10,legL:6,legR:-6,kneeL:0,kneeR:0}));
 function applyPose(i,t){
   const c = cur[i], k = reduced?0.12:0.28;
   for(const key in t) c[key] = lerp(c[key], t[key], k);
@@ -780,11 +680,6 @@ function applyPose(i,t){
   if(J.skirt) J.skirt.setAttribute("transform", `rotate(${(-c.hip*0.7).toFixed(2)})`);
   if(J.shadow){ const s = clamp(1-c.lift/90,.45,1); J.shadow.setAttribute("rx",(46*s).toFixed(1)); J.shadow.setAttribute("opacity",(0.4*s).toFixed(2)); }
   if(J.bulb) J.bulb.setAttribute("fill", S.beatFlash>.4 ? "#ffc93c" : "#ff2e88");
-  if(J.vomit){
-    const v = c.vomit;
-    J.vomit.setAttribute("opacity", (v>0.06 ? Math.min(1,v*1.35) : 0).toFixed(2));
-    J.vomit.setAttribute("transform", `scale(${(0.45+v*0.75).toFixed(2)})`);
-  }
 }
 
 /* ============================ ÁUDIO ============================ */
@@ -932,41 +827,19 @@ function svgToImg(svgEl, w, h){
     im.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(c));
   });
 }
-function drawImageCover(g, img, x, y, w, h){
-  const ir = img.width/img.height, r = w/h;
-  let sw, sh, sx, sy;
-  if(ir > r){ sh = img.height; sw = sh*r; sx = (img.width-sw)/2; sy = 0; }
-  else{ sw = img.width; sh = sw/r; sx = 0; sy = (img.height-sh)/2; }
-  g.drawImage(img, sx, sy, sw, sh, x, y, w, h);
-}
 async function composeShot(){
   const s = $("#stage").getBoundingClientRect();
   const N = 1080, k = N/s.width;
   const cv = document.createElement("canvas");
   cv.width = N; cv.height = Math.round(s.height*k);
   const g = cv.getContext("2d");
-  if(bgImage){
-    drawImageCover(g, bgImage, 0, 0, cv.width, cv.height);
-    const scrim = g.createLinearGradient(0,0,0,cv.height);
-    scrim.addColorStop(0,"rgba(21,9,32,.6)"); scrim.addColorStop(.32,"rgba(21,9,32,.18)");
-    scrim.addColorStop(.68,"rgba(21,9,32,.18)"); scrim.addColorStop(1,"rgba(21,9,32,.62)");
-    g.fillStyle = scrim; g.fillRect(0,0,cv.width,cv.height);
-  } else {
-    const bg = g.createLinearGradient(0,0,0,cv.height);
-    bg.addColorStop(0,"#1b0a2a"); bg.addColorStop(.58,"#2a0f3f"); bg.addColorStop(1,"#3d1550");
-    g.fillStyle = bg; g.fillRect(0,0,cv.width,cv.height);
-  }
+  const bg = g.createLinearGradient(0,0,0,cv.height);
+  bg.addColorStop(0,"#1b0a2a"); bg.addColorStop(.58,"#2a0f3f"); bg.addColorStop(1,"#3d1550");
+  g.fillStyle = bg; g.fillRect(0,0,cv.width,cv.height);
   if(FW) g.drawImage(fx, 0, 0, cv.width, cv.height);
   const glow = g.createRadialGradient(cv.width/2, cv.height*0.92, 0, cv.width/2, cv.height*0.92, cv.width*0.62);
   glow.addColorStop(0,"rgba(255,201,60,.20)"); glow.addColorStop(1,"rgba(255,201,60,0)");
   g.fillStyle = glow; g.fillRect(0,0,cv.width,cv.height);
-  try{
-    const crateEl = document.querySelector(".minicrate svg");
-    const cr = crateEl.getBoundingClientRect();
-    const cw = Math.round(cr.width*k), ch = Math.round(cr.height*k);
-    const cim = await svgToImg(crateEl, cw, ch);
-    g.drawImage(cim, Math.round((cr.x-s.x)*k), Math.round((cr.y-s.y)*k), cw, ch);
-  }catch(e){}
   const order = LAYOUT[S.n].map((L,i)=>({i,z:L.z})).sort((a,b)=>a.z-b.z).map(o=>o.i);
   for(const i of order){
     const r = document.getElementById("p"+i).getBoundingClientRect();
@@ -978,7 +851,7 @@ async function composeShot(){
   }
   const pad = N*0.042, fs = N*0.038;
   g.font = `${fs}px Bungee, Archivo, sans-serif`;
-  const label = "QUINTA DE MINIS";
+  const label = "CABEÇA NO BAILARICO";
   const tw = g.measureText(label).width;
   g.fillStyle = "rgba(21,9,32,.66)";
   const bw = tw + pad*1.4, bh = fs*2.0, bx = pad, by = pad;
@@ -989,37 +862,8 @@ async function composeShot(){
   g.fillText(label, bx + pad*0.7, by + bh/2 + fs*0.06);
   return new Promise(res=>cv.toBlob(res, "image/png"));
 }
-let bgImage = null, bgObjUrl = null;
-const stagePhoto = $("#stagephoto"), stageScrim = $("#stagescrim");
-function setStageBG(file){
-  if(!file) return;
-  if(bgObjUrl) URL.revokeObjectURL(bgObjUrl);
-  bgObjUrl = URL.createObjectURL(file);
-  const img = new Image();
-  img.onload = ()=>{
-    bgImage = img;
-    stagePhoto.style.backgroundImage = `url(${bgObjUrl})`;
-    stagePhoto.classList.add("on");
-    stageScrim.classList.add("on");
-  };
-  img.onerror = ()=>{ if(bgObjUrl) URL.revokeObjectURL(bgObjUrl); bgObjUrl = null; };
-  img.src = bgObjUrl;
-}
-function clearStageBG(){
-  if(bgObjUrl){ URL.revokeObjectURL(bgObjUrl); bgObjUrl = null; }
-  bgImage = null;
-  stagePhoto.style.backgroundImage = "";
-  stagePhoto.classList.remove("on");
-  stageScrim.classList.remove("on");
-}
-$("#bgcambtn").onclick = ()=> $("#bgcam").click();
-$("#bggalbtn").onclick = ()=> $("#bggallery").click();
-$("#bgcam").onchange = e=>{ setStageBG(e.target.files&&e.target.files[0]); e.target.value=""; };
-$("#bggallery").onchange = e=>{ setStageBG(e.target.files&&e.target.files[0]); e.target.value=""; };
-$("#bgreset").onclick = clearStageBG;
-
 let shotFile = null, shotUrl = null;
-const SHARE_TEXT = "Olha a nossa Quinta de Minis 🍻🕺💃";
+const SHARE_TEXT = "Olha o nosso bailarico 🕺🪩💃";
 async function takeShot(){
   const btn = $("#shoot");
   btn.disabled = true; btn.textContent = "A tirar a fotografia…";
@@ -1094,7 +938,6 @@ function frame(now){
   for(let i=0;i<S.n;i++){
     const name = !S.src ? "quieto" : (S.moveSel==="auto" ? S.d[i].move : S.moveSel);
     let t = (MOVES[name]||MOVES.quieto).fn(S.phase, S.beat, e);
-    if(t.vomit===undefined) t.vomit = 0;
     if(S.n>1 && i>=half) t = mirror(t);   // a metade da direita espelha a da esquerda
     applyPose(i, t);
   }
@@ -1343,6 +1186,15 @@ function goStage(sel){
   updateMoveTag();
   requestAnimationFrame(sizeFx);
 }
+
+// Se houver um natal.html ao lado (no GitHub Pages), o link aponta para o vizinho;
+// caso contrário fica na versão publicada.
+(function(){
+  const a = $("#xmaslink"); if(!a) return;
+  try{
+    fetch("natal.html",{method:"HEAD"}).then(r=>{ if(r.ok){ a.href="natal.html"; a.removeAttribute("target"); } }).catch(()=>{});
+  }catch(e){}
+})();
 
 renderPicks();
 applyLayout();
