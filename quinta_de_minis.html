@@ -31,6 +31,7 @@
   --gold:#ffc93c;
   --cyan:#24e0d0;
   --violet:#8a5cf6;
+  --green:#2ea86a;
   --pulse:0;
   --display:"Bungee","Archivo Black",system-ui,sans-serif;
   --body:"Archivo","Helvetica Neue",Arial,sans-serif;
@@ -217,10 +218,25 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .wa{background:#25d366;color:#06301a;box-shadow:0 4px 0 #148a41;font-family:var(--display)}
 .wa:active{box-shadow:0 1px 0 #148a41}
 @media (min-width:520px){.sheet{align-items:center}}
+.btn.green{background:var(--green);color:#042315;box-shadow:0 4px 0 #1c6c44}
+.btn.green:active{box-shadow:0 1px 0 #1c6c44}
+/* ---------- modo palco ---------- */
+body.stagemode{overflow:hidden}
+body.stagemode .top,
+body.stagemode #view-stage>*:not(.stage){display:none}
+body.stagemode .wrap{padding:0;max-width:none;gap:0}
+body.stagemode .stage{position:fixed;inset:0;width:100%;height:100%;aspect-ratio:auto;border-radius:0;border:0;z-index:70}
+body.stagemode .hud,body.stagemode .spec{display:none}
+body.stagemode .movetag{opacity:.5}
+#exitstage{display:none;position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;z-index:80;
+  width:42px;height:42px;border-radius:50%;place-items:center;font-size:17px;
+  background:rgba(21,9,32,.6);backdrop-filter:blur(6px);border:1px solid rgba(251,239,228,.2);color:var(--ink);cursor:pointer}
+body.stagemode #exitstage{display:grid}
 #home{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;z-index:55;
   width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:16px;
   background:rgba(21,9,32,.62);backdrop-filter:blur(6px);border:1px solid rgba(251,239,228,.16);
   color:var(--ink);text-decoration:none}
+body.stagemode #home{display:none}
 </style>
 
 <div class="wrap">
@@ -311,7 +327,10 @@ a.btn{display:block;text-align:center;text-decoration:none}
       <div class="spec" id="spec" aria-hidden="true"></div>
     </div>
 
-    <button class="btn" id="shoot">📸 Fotografar e partilhar</button>
+    <div class="row">
+      <button class="btn" id="shoot">📸 Fotografia</button>
+      <button class="btn green" id="stagebtn">🎬 Modo palco</button>
+    </div>
 
     <div class="card">
       <p class="label">Fundo do palco</p>
@@ -365,6 +384,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
     <p class="note">As fotos e o som ficam no teu aparelho — nada é enviado para lado nenhum.</p>
   </section>
 </div>
+
+<button id="exitstage" title="Sair do modo palco" aria-label="Sair do modo palco">✕</button>
 
 <div class="sheet hidden" id="sheet" role="dialog" aria-modal="true" aria-label="Partilhar a fotografia">
   <div class="sheet-in">
@@ -1290,6 +1311,18 @@ $("#useit").onclick = ()=>{
 };
 $("#lights").onclick = e=>{ e.stopPropagation(); S.lights=!S.lights; e.currentTarget.setAttribute("aria-pressed",String(S.lights)); };
 $("#shoot").onclick = takeShot;
+/* ---- modo palco ---- */
+function setStageMode(on){
+  document.body.classList.toggle("stagemode", on);
+  if(on){ try{ document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }catch(e){} }
+  else { try{ document.fullscreenElement && document.exitFullscreen(); }catch(e){} }
+}
+$("#stagebtn").onclick = ()=> setStageMode(true);
+$("#exitstage").onclick = ()=> setStageMode(false);
+document.addEventListener("fullscreenchange", ()=>{
+  if(!document.fullscreenElement && document.body.classList.contains("stagemode")) setStageMode(false);
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && document.body.classList.contains("stagemode")) setStageMode(false); });
 $("#closesheet").onclick = ()=> $("#sheet").classList.add("hidden");
 $("#sheet").addEventListener("click", e=>{ if(e.target.id==="sheet") $("#sheet").classList.add("hidden"); });
 $("#dosend").onclick = async ()=>{
