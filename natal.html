@@ -275,6 +275,7 @@ body.stagemode #home{display:none}
     <div class="card">
       <div class="slider-row"><span>Zoom</span><input type="range" id="zoom" min="40" max="400" value="100" aria-label="Zoom da foto"></div>
       <div class="slider-row"><span>Rodar</span><input type="range" id="rot" min="-180" max="180" value="0" aria-label="Rodar a foto"></div>
+      <div class="slider-row"><span>Luz</span><input type="range" id="bright" min="50" max="200" value="100" aria-label="Luz da foto"></div>
     </div>
     <button class="btn red" id="useit">Pôr a dançar</button>
     <button class="btn ghost" id="another">Escolher outra foto</button>
@@ -416,7 +417,7 @@ function show(id){
 
 /* ============================ RECORTE DA FOTO ============================ */
 const cropCv = $("#crop"), cropCtx = cropCv.getContext("2d");
-let img=null, cs=1, cx=0, cy=0, crot=0, baseFit=0, CW=0;
+let img=null, cs=1, cx=0, cy=0, crot=0, baseFit=0, CW=0, bright=1;
 
 function fitCrop(){
   const box = cropCv.parentElement.getBoundingClientRect();
@@ -439,7 +440,9 @@ function drawCrop(){
   cropCtx.translate(W/2+cx, H/2+cy);
   cropCtx.rotate(crot*Math.PI/180);
   cropCtx.scale(k,k);
+  cropCtx.filter = `brightness(${bright})`;
   cropCtx.drawImage(img, -img.width/2, -img.height/2);
+  cropCtx.filter = "none";
   cropCtx.restore();
   cropCtx.save();
   cropCtx.fillStyle="rgba(4,16,29,.74)";
@@ -453,8 +456,8 @@ function drawCrop(){
 function loadPhoto(file){
   const im = new Image();
   im.onload = ()=>{
-    img = im; cs=1; cx=0; cy=0; crot=0; baseFit=0;
-    $("#zoom").value = 100; $("#rot").value = 0;
+    img = im; cs=1; cx=0; cy=0; crot=0; baseFit=0; bright=1;
+    $("#zoom").value = 100; $("#rot").value = 0; $("#bright").value = 100;
     $("#crophint").textContent = "Arrasta para mover · dois dedos ou a roda para ampliar";
     $("#croptitle").textContent = "Cara " + ofName(S.target);
     show("crop");
@@ -507,6 +510,7 @@ async function tryFaceDetect(im){
 })();
 $("#zoom").addEventListener("input", e=>{ cs = e.target.value/100; drawCrop(); });
 $("#rot").addEventListener("input", e=>{ crot = +e.target.value; drawCrop(); });
+$("#bright").addEventListener("input", e=>{ bright = e.target.value/100; drawCrop(); });
 window.addEventListener("resize", ()=>{ if($("#view-crop").classList.contains("on")) fitCrop(); sizeFx(); });
 
 function exportHead(){
@@ -518,7 +522,9 @@ function exportHead(){
   g.save();
   g.translate(N/2,N/2); g.scale(sc,sc);
   g.translate(cx,cy); g.rotate(crot*Math.PI/180); g.scale(baseFit*cs, baseFit*cs);
+  g.filter = `brightness(${bright})`;
   g.drawImage(img, -img.width/2, -img.height/2);
+  g.filter = "none";
   g.restore();
   g.globalCompositeOperation = "destination-in";
   g.beginPath(); g.arc(N/2,N/2,N/2-1,0,TAU); g.fillStyle="#fff"; g.fill();
